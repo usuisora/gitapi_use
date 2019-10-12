@@ -12,7 +12,7 @@ function getPath(
   return `${url}${dir}?q=${q}&page=${page}&access_token=${token}`;
 }
 
-export async function getBody(dir: string, q: string, page: number) {
+export async function getBody(dir: string, q: string, page: number = 1) {
   const query = getPath(dir, q, page);
   const response = await fetch(query);
   const body = await response.json();

@@ -13,6 +13,13 @@ async function getAllProjects(q) {
     return await getProjectsRecursive(q, 1, []);
 }
 exports.getAllProjects = getAllProjects;
+// https://api.github.com/search/repositories?q=repo:microsoft/typescript
+async function getStars(project) {
+    const q = `repo:${project}`;
+    const body = await GitClient.getBody("repositories", `repo:${project}`);
+    return await body.items[0].stargazers_count;
+}
+exports.getStars = getStars;
 // async function getTop3Project(full_names){
 //   let ratingProjects = []
 // }

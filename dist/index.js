@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const GitApi_1 = require("./lib/GitApi");
 let q = "NOT class AND type+language:ts";
-GitApi_1.getAllProjects(q).then(res => console.log(res));
+GitApi_1.getStars("microsoft/typescript").then(stars => console.log(stars));
+// getAllProjects(q).then(res => console.log(res));
 // let gitApi = "https://api.github.com/search/";
 // let token = "daf6ad231ba6903840667d355eebca078554ff89";
 // let headers: object = {

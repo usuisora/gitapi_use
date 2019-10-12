@@ -1,9 +1,10 @@
 import fetch from "node-fetch";
 import { dirs } from "./types";
-import { getAllProjects } from "./lib/GitApi";
+import { getAllProjects, getStars } from "./lib/GitApi";
 
 let q = "NOT class AND type+language:ts";
-getAllProjects(q).then(res => console.log(res));
+getStars("microsoft/typescript").then(stars => console.log(stars));
+// getAllProjects(q).then(res => console.log(res));
 
 // let gitApi = "https://api.github.com/search/";
 // let token = "daf6ad231ba6903840667d355eebca078554ff89";

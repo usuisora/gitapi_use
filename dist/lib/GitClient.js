@@ -7,7 +7,7 @@ const url = "https://api.github.com/search/";
 function getPath(dir, q, page, token = accessToken) {
     return `${url}${dir}?q=${q}&page=${page}&access_token=${token}`;
 }
-async function getBody(dir, q, page) {
+async function getBody(dir, q, page = 1) {
     const query = getPath(dir, q, page);
     const response = await node_fetch_1.default(query);
     const body = await response.json();
