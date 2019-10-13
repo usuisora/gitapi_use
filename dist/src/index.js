@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const GithubApi_1 = require("./lib/GithubApi");
 let q = "NOT class AND type+language:ts";
-GithubApi_1.getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).map(response => response.then(body => console.log(body)));
+console.log(GithubApi_1.getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]));
 // function rely() {
-// getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).then(res =>
-//   res.forEach(prom => prom.then(r => console.log(r)))
-// );
-// // }
+//   console.log(
+//     await getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"])
+//   );
+// }
 // rely();
-// getStars("microsoft/TypeScript").then(res => console.log(res));
+// getAllProjects(q).then(res => console.log(res));
 // let GithubApi = "https://api.github.com/search/";
 // let token = "daf6ad231ba6903840667d355eebca078554ff89";
 // let headers: object = {
