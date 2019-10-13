@@ -20,20 +20,21 @@ async function getStars(project) {
     return body.errors == undefined ? body.items[0].stargazers_count : 0;
 }
 exports.getStars = getStars;
-async function getRatedProjects(names) {
+async function getProjectsRate(names) {
     console.log("getting Rate...");
     return await Promise.all(names.map(async (name) => {
         const stars = await getStars(name);
         return await { name, stars };
     }));
 }
-exports.getRatedProjects = getRatedProjects;
-async function getSortedProjects(names, filter) {
-    return getRatedProjects()
-        .sort((a, b) => a[filter] > b[filter]);
+exports.getProjectsRate = getProjectsRate;
+async function getSortedProjects(names, comparison = "stars") {
+    const rated = await getProjectsRate(names);
+    return rated.sort((a, b) => b[comparison] - a[comparison]);
 }
 exports.getSortedProjects = getSortedProjects;
-// export async function getTopProjects(names) {
-//   const arr = await getSortedProjects(names, "stars");
-//   return arr.slice(0, 3);
-// }
+async function getTopProjects(names, count = 1) {
+    const sorted = await getSortedProjects(names, "stars");
+    return sorted.slice(0, count);
+}
+exports.getTopProjects = getTopProjects;
