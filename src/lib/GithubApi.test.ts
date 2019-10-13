@@ -26,16 +26,13 @@ import { getAllProjects, getStars, getRatedProjects } from "./GithubApi";
 //   });
 // });
 
-// test("get list of rated projects", async done => {
-//   jest.setTimeout(60000);
-//   getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).map(
-//     async response => {
-//       const body = await response;
-//       expect(body.stars).not.toEqual(0);
-//       done();
-//     }
-//   );
-// });
+test("get list of rated projects", async done => {
+  jest.setTimeout(60000);
+  getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).then(res => {
+    expect(res.length).toEqual(2);
+  });
+});
+
 // test("get list of  unexisted rated projects", async done => {
 //   jest.setTimeout(60000);
 //   getRatedProjects(["microsoft/TypeScript23", "typeorm/typeorm3"]).map(

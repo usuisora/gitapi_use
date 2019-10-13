@@ -2,11 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const GithubApi_1 = require("./lib/GithubApi");
 let q = "NOT class AND type+language:ts";
-console.log(GithubApi_1.getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]));
-// getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).map(response =>
-//   response.then(body =>
-//      console.log(body))
-// );
+// console.log(getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]));
+GithubApi_1.getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).then(response => console.log(response));
 // function rely() {
 // getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).then(res =>
 //   res.forEach(prom => prom.then(r => console.log(r)))

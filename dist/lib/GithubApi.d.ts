@@ -4,3 +4,4 @@ export declare function getRatedProjects(names: string[]): Promise<{
     name: string;
     stars: any;
 }[]>;
+export declare function getSortedProjects(names: any, filter: string): Promise<any>;

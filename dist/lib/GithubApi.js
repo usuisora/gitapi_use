@@ -20,24 +20,19 @@ async function getStars(project) {
     return body.errors == undefined ? body.items[0].stargazers_count : 0;
 }
 exports.getStars = getStars;
-function getRatedProjects(names) {
+async function getRatedProjects(names) {
     console.log("getting Rate...");
-    return Promise.all(names.map(async (name) => {
+    return await Promise.all(names.map(async (name) => {
         const stars = await getStars(name);
         return await { name, stars };
     }));
 }
 exports.getRatedProjects = getRatedProjects;
-// export async function getSortedProjects(names, filter: string) {
-//   return getRatedProjects(names).map(response =>
-//    .map(
-//      async response => {
-//        const body = await response;
-//       body.
-//      }
-//    );
-//   .sort((a, b) => a[filter] > b[filter]);
-// }
+async function getSortedProjects(names, filter) {
+    return getRatedProjects()
+        .sort((a, b) => a[filter] > b[filter]);
+}
+exports.getSortedProjects = getSortedProjects;
 // export async function getTopProjects(names) {
 //   const arr = await getSortedProjects(names, "stars");
 //   return arr.slice(0, 3);
