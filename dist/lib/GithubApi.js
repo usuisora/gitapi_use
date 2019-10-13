@@ -22,14 +22,21 @@ async function getStars(project) {
 exports.getStars = getStars;
 function getRatedProjects(names) {
     console.log("getting Rate...");
-    return names.map(async (name) => {
+    return Promise.all(names.map(async (name) => {
         const stars = await getStars(name);
         return await { name, stars };
-    });
+    }));
 }
 exports.getRatedProjects = getRatedProjects;
 // export async function getSortedProjects(names, filter: string) {
-//   return await getRatedProjects(names).sort((a, b) => a[filter] > b[filter]);
+//   return getRatedProjects(names).map(response =>
+//    .map(
+//      async response => {
+//        const body = await response;
+//       body.
+//      }
+//    );
+//   .sort((a, b) => a[filter] > b[filter]);
 // }
 // export async function getTopProjects(names) {
 //   const arr = await getSortedProjects(names, "stars");

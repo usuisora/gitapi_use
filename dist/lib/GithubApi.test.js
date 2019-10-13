@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const GithubApi_1 = require("./GithubApi");
 // test("get all projects full_names", async done => {
 //   jest.setTimeout(60000);
 //   getAllProjects("typescript+language:ts").then(res => {
@@ -24,19 +23,23 @@ const GithubApi_1 = require("./GithubApi");
 //     done();
 //   });
 // });
-test("get list of rated projects", async (done) => {
-    jest.setTimeout(60000);
-    GithubApi_1.getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).map(async (response) => {
-        const body = await response;
-        expect(body.stars).not.toEqual(0);
-        done();
-    });
-});
-test("get list of  unexisted rated projects", async (done) => {
-    jest.setTimeout(60000);
-    GithubApi_1.getRatedProjects(["microsoft/TypeScript23", "typeorm/typeorm3"]).map(async (response) => {
-        const body = await response;
-        expect(body.stars).toEqual(0);
-        done();
-    });
-});
+// test("get list of rated projects", async done => {
+//   jest.setTimeout(60000);
+//   getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).map(
+//     async response => {
+//       const body = await response;
+//       expect(body.stars).not.toEqual(0);
+//       done();
+//     }
+//   );
+// });
+// test("get list of  unexisted rated projects", async done => {
+//   jest.setTimeout(60000);
+//   getRatedProjects(["microsoft/TypeScript23", "typeorm/typeorm3"]).map(
+//     async response => {
+//       const body = await response;
+//       expect(body.stars).toEqual(0);
+//       done();
+//     }
+//   );
+// });

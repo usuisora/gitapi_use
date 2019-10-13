@@ -3,10 +3,12 @@ import { dirs } from "./types";
 import { getAllProjects, getRatedProjects, getStars } from "./lib/GithubApi";
 
 let q = "NOT class AND type+language:ts";
-getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).map(response =>
-  response.then(body =>
-     console.log(body))
-);
+
+console.log(getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]));
+// getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).map(response =>
+//   response.then(body =>
+//      console.log(body))
+// );
 // function rely() {
 // getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).then(res =>
 //   res.forEach(prom => prom.then(r => console.log(r)))
