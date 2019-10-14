@@ -1,4 +1,5 @@
 export declare function getAllProjects(q: string): Promise<any>;
+export declare function getProjects(q: string): Promise<any>;
 export declare function getStars(project: string): Promise<any>;
 export declare function getProjectsRate(names: string[]): Promise<{
     name: string;

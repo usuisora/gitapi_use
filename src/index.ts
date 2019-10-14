@@ -1,30 +1,41 @@
 import fetch from "node-fetch";
 import { dirs } from "./types";
-import {
-  getProjectsRate,
-  getSortedProjects,
-  getTopProjects
-} from "./lib/GithubApi";
+import * as GithubApi from "./lib/GithubApi";
+import * as fileWorker from "./lib/fileWorker";
 
-let q = "NOT class AND type+language:ts";
+async function App() {
+  const query = "NOT class AND type+language:ts";
+  // gettingProjects
+  const projects: string[] = await GithubApi.getProjects(query);
+  let data = {
+    query,
+    projects
+  };
+  fileWorker.write(data, __dirname + "/files/projects.txt");
 
-// console.log(getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]));
-getTopProjects(
-  ["microsoft/TypeScript", "brookshi/Hitchhiker", "typeorm/typeorm"],
-  2
-).then(res => console.log("top = ", res));
-// function rely() {
-// getRatedProjects(["microsoft/TypeScript", "typeorm/typeorm"]).then(res =>
-//   res.forEach(prom => prom.then(r => console.log(r)))
-// );
-// // }
-// rely();
-// getStars("microsoft/TypeScript").then(res => console.log(res));
+  // fs.writeFile(
+  //   __dirname + "/files/projects.json",
+  //   JSON.stringify(projects),
+  //   err => {
+  //     if (err) {
+  //       console.error("Err", err);
+  //       return;
+  //     }
+  //     console.log("written");
+  //     fs.readFile(__dirname + "/files/projects.txt", (err, data) => {
+  //       if (err) {
+  //         console.log("Err on reading", err);
+  //         return;
+  //       }
+  //       console.log(JSON.parse(data.toString()));
+  //     });
+  //   }
+  // );
 
-// let GithubApi = "https://api.github.com/search/";
-// let token = "daf6ad231ba6903840667d355eebca078554ff89";
-// let headers: object = {
-//   Authorization: token
-// };
+  // GithubApi.getTopProjects(projects, 3).then(res => {
+  //   console.log(`Your Query: ${query}`);
+  //   console.log(res);
+  // });
+}
 
-//
+App();

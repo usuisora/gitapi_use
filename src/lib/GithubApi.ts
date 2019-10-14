@@ -1,7 +1,7 @@
 import * as GithubClient from "./GithubClient";
 async function getProjectsRecursive(q: string, page: number, result) {
   const body = await GithubClient.getBody("code", q, page);
-  if (body.items == undefined) return result;
+  if (body.items == undefined || page == 2) return result;
   body.items.map(item => result.push(item.repository.full_name));
   return getProjectsRecursive(q, page + 1, result);
 }
@@ -9,6 +9,11 @@ async function getProjectsRecursive(q: string, page: number, result) {
 export async function getAllProjects(q: string) {
   console.log("wait please analizing...");
   return await getProjectsRecursive(q, 1, []);
+}
+export async function getProjects(q: string) {
+  const body = await GithubClient.getBody("code", q);
+  if (body.items == undefined) return [];
+  return body.items.map(item => item.repository.full_name);
 }
 // https://api.github.com/search/repositories?q=repo:microsoft/typescript
 export async function getStars(project: string) {
