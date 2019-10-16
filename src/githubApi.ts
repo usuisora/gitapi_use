@@ -1,7 +1,4 @@
-import {
-    project,
-    ratedProject
-} from './types'
+import { Project, RatedProject } from "./types";
 import AuthClient from "./classes/AuthClient";
 import URL from "./classes/Url";
 require("dotenv").config();
@@ -12,56 +9,52 @@ let repoApi = api + "repositories";
 let client = new AuthClient(process.env.ACCESS_TOKEN);
 let query: string = process.env.QUERY;
 
- const  projectsByPage = async (
-    url: string,
-    page: number = 1,
-    projects: project[] = []
-): Promise<project[]> => {
-    try {
-        let data = await client.request(url.toString());
-        let new_projects = [
-            projects,
-            ...data.items.map(item => {
-                name: item.full_name;
-            })
-        ];
-        return page == 34
-            ? new_projects
-            : await projectsByPage(url, page + 1, new_projects);
-    } catch (err) {
-        console.log(err);
-        return projects;
-    }
+const projectsByPage = async (
+  url: string,
+  page: number = 1,
+  projects: Project[] = []
+): Promise<Project[]> => {
+  try {
+    let data = await client.request(url.toString());
+    let new_projects = [
+      projects,
+      ...data.items.map(item => {
+        name: item.full_name;
+      })
+    ];
+    return page == 34
+      ? new_projects
+      : await projectsByPage(url, page + 1, new_projects);
+  } catch (err) {
+    console.log(err);
+    return projects;
+  }
 };
 
 export const projects = async () => {
-    let url: URL = new URL(codeApi, query, client.access_token);
-    let projects: project[] = await projectsByPage(url.toString());
-    return projects;
+  let url: URL = new URL(codeApi, query, client.access_token);
+  let projects: Project[] = await projectsByPage(url.toString());
+  return projects;
 };
 
- const ratedProject = async (project: project): Promise<ratedProject> => {
-    let url: URL = new URL(
-        repoApi,
-        "?q=repo:" + project.name,
-        client.access_token
-    );
-    let data = await client.request(url.toString());
-    let rated: ratedProject = {
-        name: project.name,
-        stars: data.items[0].stargazers_count
-    };
-    return rated;
+const ratedProject = async (project: Project): Promise<RatedProject> => {
+  let url: URL = new URL(
+    repoApi,
+    "?q=repo:" + project.name,
+    client.access_token
+  );
+  let data = await client.request(url.toString());
+  let rated: RatedProject = {
+    name: project.name,
+    stars: data.items[0].stargazers_count
+  };
+  return rated;
 };
 
 export const getRatedProjectList = async (
-    projectList: project[]
-): Promise<ratedProject[]> => {
-    return await Promise.all(
-        projectList.map(async project => await ratedProject(project))
-    );
+  projectList: Project[]
+): Promise<RatedProject[]> => {
+  return await Promise.all(
+    projectList.map(async project => await ratedProject(project))
+  );
 };
-
-
-
-

@@ -1,11 +1,11 @@
-import { ratedProject } from "../types";
+import { RatedProject } from "../types";
 
-class ratedProjectList {
-  value: ratedProject[];
-  constructor(value: ratedProject[]) {
+class RatedProjectList {
+  value: RatedProject[];
+  constructor(value: RatedProject[]) {
     this.value = value;
   }
-  sort = (): ratedProject[] => {
+  sort = (): RatedProject[] => {
     return this.value.sort((a, b) => b.stars - a.stars);
   };
   top = (to: number = 3) => {

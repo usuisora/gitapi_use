@@ -1,2 +1,2 @@
-export type project = { name: string };
-export type ratedProject = { name: string; stars: number };
+export type Project = { name: string };
+export type RatedProject = { name: string; stars: number };
