@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
-function write(data, path) {
-    fs.writeFile(path, JSON.stringify(data), err => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-    });
+function writeJson(path, data) {
+    let d = JSON.stringify(data);
+    fs.writeFileSync(path, d);
 }
-exports.write = write;
-function read(path) {
-    fs.readFile(path, (data, err) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        return JSON.parse(data.toString());
-    });
+exports.writeJson = writeJson;
+function readJson(path) {
+    try {
+        let file = fs.readFileSync(path).toString();
+        return JSON.parse(file);
+    }
+    catch (err) {
+        return {};
+    }
 }
-exports.read = read;
+exports.readJson = readJson;
+function BufferToJson(data) {
+    return JSON.parse(data.toString());
+}
+exports.BufferToJson = BufferToJson;
 function isEmptyFile(path) {
-    return Boolean(JSON.stringify(read(path)).length);
+    return fs.readFileSync(path).length == 0;
 }
 exports.isEmptyFile = isEmptyFile;

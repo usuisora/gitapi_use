@@ -1,13 +1,15 @@
 import * as GithubClient from "./GithubClient";
+import { delay } from "./baseLib";
 async function getProjectsRecursive(q: string, page: number, result) {
   const body = await GithubClient.getBody("code", q, page);
-  if (body.items == undefined || page == 2) return result;
+  if (body.message) console.log(body.message);
+  if (body.items == undefined || page == 7) return result;
   body.items.map(item => result.push(item.repository.full_name));
-  return getProjectsRecursive(q, page + 1, result);
+  return await getProjectsRecursive(q, page + 1, result);
 }
 
 export async function getAllProjects(q: string) {
-  console.log("wait please analizing...");
+  console.log("wait please analyzing...");
   return await getProjectsRecursive(q, 1, []);
 }
 export async function getProjects(q: string) {
@@ -16,10 +18,13 @@ export async function getProjects(q: string) {
   return body.items.map(item => item.repository.full_name);
 }
 // https://api.github.com/search/repositories?q=repo:microsoft/typescript
-export async function getStars(project: string) {
+export async function getStars(project: string): Promise<number> {
   const q = `repo:${project}`;
   const body = await GithubClient.getBody("repositories", `repo:${project}`);
-  return body.errors == undefined ? body.items[0].stargazers_count : 0;
+  if (!body.items) {
+    return -1;
+  }
+  return body.items[0].stargazers_count;
 }
 
 export async function getProjectsRate(names: string[]) {
