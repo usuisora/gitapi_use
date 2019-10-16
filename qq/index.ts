@@ -72,4 +72,4 @@ async function App() {
     updateProjectsRate(ratedProjectsPath, diff, rated);
   });
 }
-App();
+// App();

@@ -21,15 +21,7 @@ async function getSearchRate() {
     return body.resources.search;
 }
 exports.getSearchRate = getSearchRate;
-var fetchTimeout = require('fetch-timeout');
-fetchTimeout('https://api.github.com/', {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-}, 5000, 'My custom timeout error string')
-    .then(function (res) {
+then(function (res) {
     if (res.status !== 200) {
         throw new Error('Status code not OK', res.status);
     }

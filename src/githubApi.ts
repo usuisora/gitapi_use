@@ -12,7 +12,7 @@ let repoApi = api + "repositories";
 let client = new AuthClient(process.env.ACCESS_TOKEN);
 let query: string = process.env.QUERY;
 
-let projectsByPage = async (
+ const  projectsByPage = async (
     url: string,
     page: number = 1,
     projects: project[] = []
@@ -34,13 +34,13 @@ let projectsByPage = async (
     }
 };
 
-let projects = async () => {
+export const projects = async () => {
     let url: URL = new URL(codeApi, query, client.access_token);
     let projects: project[] = await projectsByPage(url.toString());
     return projects;
 };
 
-let ratedProject = async (project: project): Promise<ratedProject> => {
+ const ratedProject = async (project: project): Promise<ratedProject> => {
     let url: URL = new URL(
         repoApi,
         "?q=repo:" + project.name,
@@ -54,7 +54,7 @@ let ratedProject = async (project: project): Promise<ratedProject> => {
     return rated;
 };
 
-let getRatedProjectList = async (
+export const getRatedProjectList = async (
     projectList: project[]
 ): Promise<ratedProject[]> => {
     return await Promise.all(

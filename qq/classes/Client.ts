@@ -3,7 +3,7 @@ type ClientType {
     token: string;
     request: (query:string)=>()
 }
-class Client extend ClientType{
+class Client extends ClientType{
     constructor(){
 
     }
