@@ -1,8 +1,11 @@
 import { RatedProject } from "../types";
 
-class RatedProjectList {
+export default class RatedProjectList {
   value: RatedProject[];
-  constructor(value: RatedProject[]) {
+  constructor(value?: RatedProject[]) {
+    // if(!value){
+    //   let
+    // }
     this.value = value;
   }
   sort = (): RatedProject[] => {

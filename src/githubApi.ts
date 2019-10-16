@@ -37,7 +37,7 @@ export const projects = async () => {
   return projects;
 };
 
-const ratedProject = async (project: Project): Promise<RatedProject> => {
+export const ratedProject = async (project: Project): Promise<RatedProject> => {
   let url: URL = new URL(
     repoApi,
     "?q=repo:" + project.name,

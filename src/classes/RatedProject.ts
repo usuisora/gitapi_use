@@ -1,12 +1,15 @@
-import Project from './Project'
+import * as _ from "lodash";
+import Project from "./Project";
+import * as fetch from "../githubApi";
 class RatedProject extends Project {
-    name: string;
-    stars: number;
-    constructor(name: string, stars: number) {
-        super(name);
-        this.stars = stars;
-    }
-    static isTypeEqual(obj: object): boolean {
-        return Object.keys(obj) == ["name", "stars"];
-    }
+  name: string;
+  stars: number;
+
+  constructor(name: string, stars: number) {
+    super(name);
+    this.stars = stars;
+  }
+  static isTypeEqual(obj: object): boolean {
+    return _.isEqual(Object.keys(obj), ["name", "stars"]);
+  }
 }
