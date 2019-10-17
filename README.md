@@ -8,10 +8,10 @@
 
 ## Before start
 
-Create .env this following config where you should specify your 
+Create .env this following config where you should specify your.
 
 - access token: [<https://github.com/settings/tokens]>
-- API : GITHUB API 
+- API : GITHUB API
 - QUERY : this field used on "q" param of url
 
 ex:
