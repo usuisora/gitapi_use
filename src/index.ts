@@ -5,8 +5,9 @@ import * as fs from "fs";
 
 const main = async () => {
   let projects = new ProjectList();
+  await projects.fill();
   let ratedProjects = new RatedProjectList();
-  console.log(ratedProjects.top())
+  console.log(ratedProjects.top());
 };
 
 let page = fs.readFileSync("./page.txt");

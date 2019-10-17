@@ -31,9 +31,9 @@ const projectsByPage = async (
   }
 };
 
-export const projects = async () => {
+export const projects = async (fromPage: number = 1) => {
   let url: URL = new URL(codeApi, query, client.access_token);
-  let projects: Project[] = await projectsByPage(url.toString());
+  let projects: Project[] = await projectsByPage(url.toString(), fromPage);
   return projects;
 };
 
