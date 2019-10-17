@@ -41,6 +41,6 @@ exports.ratedProject = async (project) => {
     };
     return rated;
 };
-exports.getRatedProjectList = async (projectList) => {
+exports.ratedProjectList = async (projectList) => {
     return await Promise.all(projectList.map(async (project) => await exports.ratedProject(project)));
 };

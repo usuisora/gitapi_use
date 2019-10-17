@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require("async-file");
+const fsj = require("../lib/fsj");
 const fetch = require("../githubApi");
 exports.path = "./projects.json";
 class ProjectList {
@@ -21,12 +21,11 @@ class ProjectList {
         let projects = page == 1 ? [] : await this.readProjectsFromFile();
         let new_projects = await fetch.projects(page);
         let data = [...projects, ...new_projects];
-        await fs.writeFile("./projects.json", data);
+        await fsj.writeJSON("./projects.json", data);
     }
     async readProjectsFromFile() {
         try {
-            let buffer = await fs.readFile(exports.path);
-            return JSON.parse(buffer.toString());
+            return await fsj.readJSON(exports.path);
         }
         catch (err) {
             throw new Error(err);
@@ -43,3 +42,11 @@ class ProjectList {
     }
 }
 exports.default = ProjectList;
+function toProjectList(arr) {
+    return arr.map(i => {
+        return {
+            name: i.name
+        };
+    });
+}
+exports.toProjectList = toProjectList;

@@ -11,3 +11,4 @@ class RatedProject extends Project_1.default {
         return _.isEqual(Object.keys(obj), ["name", "stars"]);
     }
 }
+exports.default = RatedProject;

@@ -51,7 +51,7 @@ export const ratedProject = async (project: Project): Promise<RatedProject> => {
   return rated;
 };
 
-export const getRatedProjectList = async (
+export const ratedProjectList = async (
   projectList: Project[]
 ): Promise<RatedProject[]> => {
   return await Promise.all(

@@ -1,10 +1,12 @@
 import Project from "./Project";
-import * as fs from "async-file";
+import * as fsj from "../lib/fsj";
 import * as fetch from "../githubApi";
 export const path = "./projects.json";
 export default class ProjectList {
   projects: Project[];
-
+  constructor() {
+    this.projects = [];
+  }
   async fill() {
     let page: number = await this.getPage();
     if (page < 34) {
@@ -19,12 +21,11 @@ export default class ProjectList {
       page == 1 ? [] : await this.readProjectsFromFile();
     let new_projects: Project[] = await fetch.projects(page);
     let data = [...projects, ...new_projects];
-    await fs.writeFile("./projects.json", data);
+    await fsj.writeJSON("./projects.json", data);
   }
   async readProjectsFromFile(): Promise<Project[]> {
     try {
-      let buffer: Project[] = await fs.readFile(path);
-      return JSON.parse(buffer.toString());
+      return await fsj.readJSON(path);
     } catch (err) {
       throw new Error(err);
     }
@@ -37,7 +38,11 @@ export default class ProjectList {
       return 1;
     }
   }
-  constructor() {
-    this.projects = [];
-  }
+}
+export function toProjectList(arr): Project[] {
+  return arr.map(i => {
+    return {
+      name: i.name
+    };
+  });
 }

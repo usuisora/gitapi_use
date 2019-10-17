@@ -1,7 +1,12 @@
-import { RatedProject } from "../types";
+import RatedProject from "./RatedProject";
+import Project from "./Project";
 export default class RatedProjectList {
-    value: RatedProject[];
-    constructor(value?: RatedProject[]);
+    ratedProjects: RatedProject[];
+    projects: Project[];
+    constructor(projects: Project[]);
+    fill(): Promise<void>;
+    getUnratedProjects(): Promise<Project[]>;
+    getRatedFromFile(): Promise<RatedProject[]>;
     sort: () => RatedProject[];
     top: (to?: number) => void;
 }
