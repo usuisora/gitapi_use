@@ -32,7 +32,7 @@ export default class ProjectList {
   async getPage(): Promise<number> {
     try {
       let projects: Project[] = await this.readProjectsFromFile();
-      return Math.floor(projects.length / 30);
+      return Math.floor(projects.length / fetch.maxResultsCount);
     } catch (err) {
       return 1;
     }

@@ -35,7 +35,7 @@ class ProjectList {
     async getPage() {
         try {
             let projects = await this.readProjectsFromFile();
-            return Math.floor(projects.length / 30);
+            return Math.floor(projects.length / fetch.maxResultsCount);
         }
         catch (err) {
             return 1;

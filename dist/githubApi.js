@@ -8,6 +8,7 @@ let codeApi = api + "code";
 let repoApi = api + "repositories";
 let client = new AuthClient_1.default(process.env.ACCESS_TOKEN);
 let query = process.env.QUERY;
+exports.maxResultsCount = 30;
 const projectsByPage = async (url, page = 1, projects = []) => {
     try {
         let data = await client.request(url.toString());

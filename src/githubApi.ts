@@ -8,7 +8,7 @@ let codeApi = api + "code";
 let repoApi = api + "repositories";
 let client = new AuthClient(process.env.ACCESS_TOKEN);
 let query: string = process.env.QUERY;
-
+export const maxResultsCount: number = 30;
 const projectsByPage = async (
   url: string,
   page: number = 1,
