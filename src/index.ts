@@ -1,14 +1,12 @@
 import ProjectList from "./classes/ProjectList";
 import RatedProjectList from "./classes/RatedProjectList";
-
-import * as fs from "fs";
+import { Project } from "./types";
 
 const main = async () => {
-  let projects = new ProjectList();
-  await projects.fill();
-  let ratedProjects = new RatedProjectList();
+  let projectList = new ProjectList();
+  await projectList.fill();
+  let ratedProjects = new RatedProjectList(projectList.projects);
+  await ratedProjects.fill();
   console.log(ratedProjects.top());
 };
 
-let page = fs.readFileSync("./page.txt");
-console.log(page);
