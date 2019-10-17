@@ -10,3 +10,4 @@ const main = async () => {
   console.log(ratedProjects.top());
 };
 
+main();
