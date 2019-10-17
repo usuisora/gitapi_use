@@ -32,3 +32,11 @@ QUERY = NOT class AND type
 npm install
 npm start
 ```
+
+## Files
+
+- ### Projects.json - contains full_names of projects (owner/repo) cached from api result
+  
+- ### ratedProjects.json - contains full_names and stars of projects (owner/repo) cached from api result
+
+- ### topProjects.json - contains the most popular projects.

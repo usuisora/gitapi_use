@@ -18,6 +18,9 @@ export default class RatedProjectList {
   async fill() {
     this.ratedProjects = await this.getRatedFromFile();
     let unrated: Project[] = await this.getUnratedProjects();
+    if (unrated.length == 0) {
+      return;
+    }
     let ratedFromUnrated: RatedProject[] = await fetch.ratedProjectList(
       unrated
     );
@@ -44,7 +47,8 @@ export default class RatedProjectList {
   sort = (): RatedProject[] => {
     return this.ratedProjects.sort((a, b) => b.stars - a.stars);
   };
-  top = (to: number = 3) => {
-    this.sort().slice(0, to);
+  top = (to: number = 3): RatedProject[] => {
+    await fsj.writeJSON(top)
+    return 
   };
 }
