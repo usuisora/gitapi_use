@@ -24,7 +24,9 @@ export default class RatedProjectList {
     let ratedFromUnrated: RatedProject[] = await fetch.ratedProjectList(
       unrated
     );
-    this.ratedProjects = [...this.ratedProjects, ...ratedFromUnrated];
+    let newRated = ratedFromUnrated.filter(rp => rp.stars >= 0);
+
+    this.ratedProjects = [...this.ratedProjects, ...newRated];
     await fsj.writeJSON(ratedPath, this.ratedProjects);
   }
   async getUnratedProjects(): Promise<Project[]> {
@@ -44,11 +46,10 @@ export default class RatedProjectList {
       return [];
     }
   }
-  sort = (): RatedProject[] => {
+  sort(): RatedProject[] {
     return this.ratedProjects.sort((a, b) => b.stars - a.stars);
-  };
-  top = (to: number = 3): RatedProject[] => {
-    await fsj.writeJSON(top)
-    return 
-  };
+  }
+  top(to: number = 3): RatedProject[] {
+    return this.sort().slice(0, to);
+  }
 }

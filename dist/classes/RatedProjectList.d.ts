@@ -7,6 +7,6 @@ export default class RatedProjectList {
     fill(): Promise<void>;
     getUnratedProjects(): Promise<Project[]>;
     getRatedFromFile(): Promise<RatedProject[]>;
-    sort: () => RatedProject[];
-    top: (to?: number) => RatedProject[];
+    sort(): RatedProject[];
+    top(to?: number): RatedProject[];
 }

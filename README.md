@@ -17,9 +17,9 @@ Create .env this following config where you should specify your.
 ex:
 
 ```sh
-ACCESS_TOKEN  = 34535f16c7a154d84d0fd06a6e7a494ef7a74f4d13/b
-API = https://api.github.com/search
-QUERY = NOT class AND type
+ACCESS_TOKEN  = '34535f16c7a154d84d0fd06a6e7a494ef7a74f4d13/b'
+API = 'https://api.github.com/search'
+QUERY = 'NOT+%20class%20+AND+type%20+language:ts'
 ```
 
 ACCESS_TOKEN  = 443f16c7a154d84d0fd06a6e7a494ef7a74f4d13
@@ -39,4 +39,5 @@ npm start
   
 - ### ratedProjects.json - contains full_names and stars of projects (owner/repo) cached from api result
 
-- ### topProjects.json - contains the most popular projects.
+- ### topProjects.json - contains the most popular projects
+  

@@ -5,7 +5,7 @@ export default class AuthClient extends Client {
     super();
     this.access_token = access_token;
   }
-  request = (url: string) => {
-    return super.request(url + this.access_token);
+  request = (url: string, delay = 5000) => {
+    return super.request(url + "&access_token=" + this.access_token, delay);
   };
 }

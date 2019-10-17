@@ -1,20 +1,20 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = require("lodash");
-const fsj = require("../lib/fsj");
-const ProjectList = require("./ProjectList");
-const fetch = require("../githubApi");
+const _ = __importStar(require("lodash"));
+const fsj = __importStar(require("../lib/fsj"));
+const ProjectList = __importStar(require("./ProjectList"));
+const fetch = __importStar(require("../githubApi"));
 const projectsPath = "./projects.json";
 const ratedPath = "./ratedProjects.json";
 class RatedProjectList {
     constructor(projects) {
-        this.sort = () => {
-            return this.ratedProjects.sort((a, b) => b.stars - a.stars);
-        };
-        this.top = (to = 3) => {
-            await fsj.writeJSON(top);
-            return;
-        };
         this.projects = projects;
         this.ratedProjects = [];
     }
@@ -25,7 +25,8 @@ class RatedProjectList {
             return;
         }
         let ratedFromUnrated = await fetch.ratedProjectList(unrated);
-        this.ratedProjects = [...this.ratedProjects, ...ratedFromUnrated];
+        let newRated = ratedFromUnrated.filter(rp => rp.stars >= 0);
+        this.ratedProjects = [...this.ratedProjects, ...newRated];
         await fsj.writeJSON(ratedPath, this.ratedProjects);
     }
     async getUnratedProjects() {
@@ -45,6 +46,12 @@ class RatedProjectList {
         catch (err) {
             return [];
         }
+    }
+    sort() {
+        return this.ratedProjects.sort((a, b) => b.stars - a.stars);
+    }
+    top(to = 3) {
+        return this.sort().slice(0, to);
     }
 }
 exports.default = RatedProjectList;

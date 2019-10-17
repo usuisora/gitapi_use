@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc-watch --onsuccess \"node dist/index.js\"",
+    "compile":"tsc-watch",
     "test": "jest"
   },
-
   "keywords": [],
   "author": "Usui_sora",
   "license": "ISC",
@@ -28,6 +28,6 @@
     "fs": "0.0.1-security",
     "lodash": "^4.17.15",
     "lodash-ts": "^1.2.7",
-    "node-fetch": "^1.6.3"
+    "node-fetch": "^1.7.3"
   }
 }

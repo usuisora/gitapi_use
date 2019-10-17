@@ -4,6 +4,8 @@
         "rootDir": "src",
         "outDir": "dist",
         "module": "commonjs",
-        "declaration": true
+        "declaration": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true
     }
 }

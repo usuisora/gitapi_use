@@ -13,7 +13,7 @@ export default class ProjectList {
       await this.addProjectsToFile(page);
     } else {
       let result: Project[] = await this.readProjectsFromFile();
-      return result;
+      this.projects = [...result];
     }
   }
   async addProjectsToFile(page: number) {
@@ -33,7 +33,7 @@ export default class ProjectList {
   async getPage(): Promise<number> {
     try {
       let projects: Project[] = await this.readProjectsFromFile();
-      return Math.floor(projects.length / fetch.maxResultsCount);
+      return Math.floor(projects.length / fetch.maxResultsCount) + 1;
     } catch (err) {
       return 1;
     }
