@@ -1,6 +1,7 @@
 import { Project, RatedProject } from "./types";
 import AuthClient from "./classes/AuthClient";
 import URL from "./classes/Url";
+import fetch from "node-fetch";
 // import Project from './classes/Project'
 // import RatedProject
 require("dotenv").config();
@@ -41,13 +42,10 @@ export const projects = async (fromPage: number = 1) => {
   return projects;
 };
 
-export const ratedProject = async (
-  project: Project,
-  delay = 100
-): Promise<RatedProject> => {
+export const ratedProject = async (project: Project): Promise<RatedProject> => {
   try {
     let url: URL = new URL(repoApi, "repo:" + project.name);
-    let data = await client.request(url.toString(), delay);
+    let data = await client.request(url.toString());
     let rated: RatedProject = {
       name: project.name,
       stars: data.items[0].stargazers_count
@@ -65,8 +63,15 @@ export const ratedProjectList = async (
   projectList: Project[]
 ): Promise<RatedProject[]> => {
   return await Promise.all(
-    projectList.map(
-      async (project, index) => await ratedProject(project, (index + 1) * 1000)
-    )
+    projectList.map(async (project, index) => await ratedProject(project))
   );
+};
+
+export const RateLimitRemaining = async () => {
+  const url: URL = new URL(repoApi, query);
+  const response = await fetch(
+    url.toString() + "&access_token=" + process.env.ACCESS_TOKEN
+  );
+  const limit = await response.headers;
+  return await limit.get("X-RateLimit-Remaining");
 };

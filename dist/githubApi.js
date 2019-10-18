@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const AuthClient_1 = __importDefault(require("./classes/AuthClient"));
 const Url_1 = __importDefault(require("./classes/Url"));
+const node_fetch_1 = __importDefault(require("node-fetch"));
 // import Project from './classes/Project'
 // import RatedProject
 require("dotenv").config();
@@ -39,10 +40,10 @@ exports.projects = async (fromPage = 1) => {
     let projects = await projectsByPage(url.toString(), fromPage);
     return projects;
 };
-exports.ratedProject = async (project, delay = 100) => {
+exports.ratedProject = async (project) => {
     try {
         let url = new Url_1.default(repoApi, "repo:" + project.name);
-        let data = await client.request(url.toString(), delay);
+        let data = await client.request(url.toString());
         let rated = {
             name: project.name,
             stars: data.items[0].stargazers_count
@@ -57,5 +58,11 @@ exports.ratedProject = async (project, delay = 100) => {
     }
 };
 exports.ratedProjectList = async (projectList) => {
-    return await Promise.all(projectList.map(async (project, index) => await exports.ratedProject(project, (index + 1) * 1000)));
+    return await Promise.all(projectList.map(async (project, index) => await exports.ratedProject(project)));
+};
+exports.RateLimitRemaining = async () => {
+    const url = new Url_1.default(repoApi, query);
+    const response = await node_fetch_1.default(url.toString() + "&access_token=" + process.env.ACCESS_TOKEN);
+    const limit = await response.headers;
+    return await limit.get("X-RateLimit-Remaining");
 };

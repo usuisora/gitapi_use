@@ -24,7 +24,6 @@
     "async-file": "^2.0.2",
     "dotenv": "^8.2.0",
     "fetch": "^1.1.0",
-    "fetch-timeout": "0.0.2",
     "fs": "0.0.1-security",
     "lodash": "^4.17.15",
     "lodash-ts": "^1.2.7",
