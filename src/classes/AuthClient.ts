@@ -8,4 +8,7 @@ export default class AuthClient extends Client {
   request = (url: string) => {
     return super.request(url + "&access_token=" + this.access_token);
   };
+  getHeader = (url, header) => {
+    return super.getHeader(url + "&access_token=" + this.access_token, header);
+  };
 }

@@ -1,6 +1,5 @@
 import * as _ from "lodash";
 import Project from "./Project";
-import * as fetch from "../githubApi";
 export default class RatedProject extends Project {
   name: string;
   stars: number;

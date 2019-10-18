@@ -9,5 +9,10 @@ class Client {
         let res = await fetch_1.default(url);
         return await res.json();
     }
+    async getHeader(url, header) {
+        const response = await fetch_1.default(url);
+        const hds = await response.headers;
+        return await hds.get(header);
+    }
 }
 exports.default = Client;

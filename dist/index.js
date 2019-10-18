@@ -19,11 +19,12 @@ const main = async () => {
     // await projectList.fill();
     // let ratedProjects = new RatedProjectList(projectList.projects);
     // await ratedProjects.fill();
+    let api = new githubApi();
     let projectList = await fsj.readJSON("./projects.json");
     let ratedProjects = new RatedProjectList_1.default(projectList);
     await ratedProjects.fill();
     // console.log(ratedProjects.top());
 };
-githubApi.RateLimitRemaining().then(res => {
-    console.log(res);
-});
+// githubApi.RateLimitRemaining().then(res => {
+//   console.log(res);
+// });

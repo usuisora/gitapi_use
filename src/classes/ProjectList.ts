@@ -4,8 +4,10 @@ import * as fetch from "../githubApi";
 export const path = "./projects.json";
 export default class ProjectList {
   projects: Project[];
+  api
   constructor() {
     this.projects = [];
+
   }
   async fill() {
     let page: number = await this.getPage();
