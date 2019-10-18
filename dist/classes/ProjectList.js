@@ -6,29 +6,38 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const fsj = __importStar(require("../lib/fsj"));
-const fetch = __importStar(require("../githubApi"));
+const fs = __importStar(require("fs"));
 exports.path = "./projects.json";
+const lodash_1 = __importDefault(require("lodash"));
 class ProjectList {
-    constructor() {
+    constructor(api) {
         this.projects = [];
+        this.api = api;
     }
     async fill() {
         let page = await this.getPage();
         if (page < 34) {
-            await this.addProjectsToFile(page);
+            if (this.api.rateLimitRemaining > 0) {
+                await this.addProjectsToFile(page);
+            }
+            return false;
         }
         else {
             let result = await this.readProjectsFromFile();
             this.projects = [...result];
+            return true;
         }
     }
     async addProjectsToFile(page) {
         let projects = page == 1 ? [] : await this.readProjectsFromFile();
-        let new_projects = await fetch.projects(page);
-        let data = [...projects, ...new_projects];
-        await fsj.writeJSON("./projects.json", data);
+        let new_projects = await this.api.fetchProjects(page);
+        let res = lodash_1.default.uniqBy([...projects, ...new_projects], "name");
+        await fsj.writeJSON("./projects.json", res);
     }
     async readProjectsFromFile() {
         try {
@@ -40,10 +49,11 @@ class ProjectList {
     }
     async getPage() {
         try {
-            let projects = await this.readProjectsFromFile();
-            return Math.floor(projects.length / fetch.maxResultsCount) + 1;
+            const page = await fsj.readJSON("./page.json");
+            return page.value;
         }
         catch (err) {
+            fsj.writeJSON("./page.json", { value: 1 });
             return 1;
         }
     }
@@ -57,3 +67,8 @@ function toProjectList(arr) {
     });
 }
 exports.toProjectList = toProjectList;
+exports.Info = () => {
+    const buffer = fs.readFileSync("./projects.json");
+    const projects = JSON.parse(buffer.toString());
+    console.log(projects.length, "  projects");
+};

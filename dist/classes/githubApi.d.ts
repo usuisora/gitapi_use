@@ -1,8 +1,8 @@
-import Project from "./classes/Project";
-import RatedProject from "./classes/RatedProject";
-import { IApi, IProjectsApi, IRatedProjectsApi } from './interfaces';
-import AuthClient from "./classes/AuthClient";
-declare class githubApi implements IApi, IProjectsApi, IRatedProjectsApi {
+import Project from "./Project";
+import RatedProject from "./RatedProject";
+import { IApi, IProjectsApi, IRatedProjectsApi } from "../interfaces";
+import AuthClient from "./AuthClient";
+declare class GithubApi implements IApi, IProjectsApi, IRatedProjectsApi {
     api: string;
     codeApi: string;
     repoApi: string;
@@ -10,12 +10,11 @@ declare class githubApi implements IApi, IProjectsApi, IRatedProjectsApi {
     query: string;
     rateLimitRemaining: number;
     maxResultsCount: number;
-    constructor();
+    constructor(api: any, token: any, query: any);
     initAsync(): Promise<void>;
     projectsByPage: (url: string, page?: number, projects?: Project[]) => Promise<Project[]>;
     fetchProjects: (fromPage?: number) => Promise<Project[]>;
     fetchRatedProject: (project: Project) => Promise<RatedProject>;
     fetchRatedProjects: (projectList: Project[]) => Promise<RatedProject[]>;
-    RateLimitRemaining: () => Promise<any>;
 }
-export default githubApi;
+export default GithubApi;

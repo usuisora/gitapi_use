@@ -9,25 +9,29 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __importStar(require("lodash"));
 const fsj = __importStar(require("../lib/fsj"));
+const fs = __importStar(require("fs"));
 const ProjectList = __importStar(require("./ProjectList"));
-const fetch = __importStar(require("../githubApi"));
 const projectsPath = "./projects.json";
 const ratedPath = "./ratedProjects.json";
 class RatedProjectList {
-    constructor(projects) {
+    constructor(projects, api) {
         this.projects = projects;
         this.ratedProjects = [];
+        this.api = api;
     }
     async fill() {
         this.ratedProjects = await this.getRatedFromFile();
         let unrated = await this.getUnratedProjects();
         if (unrated.length == 0) {
-            return;
+            return true;
         }
-        let ratedFromUnrated = await fetch.ratedProjectList(unrated);
-        let newRated = ratedFromUnrated.filter(rp => rp.stars >= 0);
-        this.ratedProjects = [...this.ratedProjects, ...newRated];
-        await fsj.writeJSON(ratedPath, this.ratedProjects);
+        if (this.api.rateLimitRemaining != 0) {
+            let ratedFromUnrated = await this.api.fetchRatedProjects(unrated.slice(0, this.api.rateLimitRemaining));
+            let newRated = ratedFromUnrated.filter(rp => rp.stars >= 0);
+            this.ratedProjects = _.uniqBy([...this.ratedProjects, ...newRated], "name");
+            await fsj.writeJSON(ratedPath, this.ratedProjects);
+        }
+        return false;
     }
     async getUnratedProjects() {
         let rated = await this.getRatedFromFile();
@@ -55,3 +59,8 @@ class RatedProjectList {
     }
 }
 exports.default = RatedProjectList;
+exports.Info = () => {
+    const buffer = fs.readFileSync("./ratedProjects.json");
+    const projects = JSON.parse(buffer.toString());
+    console.log(projects.length, " rated projects");
+};
