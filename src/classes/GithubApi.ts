@@ -17,8 +17,8 @@ class GithubApi implements IApi, IProjectsApi, IRatedProjectsApi {
   query: string;
   rateLimitRemaining: number;
   maxResultsCount: number;
-  constructor(api, token , query) {
-    this.api = api
+  constructor(api, token, query) {
+    this.api = api;
     this.codeApi = this.api + "/code";
     this.repoApi = this.api + "/repositories";
     this.client = new AuthClient(token);
@@ -31,6 +31,9 @@ class GithubApi implements IApi, IProjectsApi, IRatedProjectsApi {
     let url = new URL(this.repoApi, this.query).toString();
     let rate = await this.client.getHeader(url, "X-RateLimit-Remaining");
     this.rateLimitRemaining = parseInt(rate) - 1;
+    if (this.rateLimitRemaining == NaN) {
+      throw Error("BED TOKEN\n");
+    }
     await fs.writeFile("./rateLimitRemaining.txt", this.rateLimitRemaining);
   }
 
@@ -70,6 +73,12 @@ class GithubApi implements IApi, IProjectsApi, IRatedProjectsApi {
   fetchRatedProject = async (project: Project): Promise<RatedProject> => {
     let url: URL = new URL(this.repoApi, "repo:" + project.name);
     let data = await this.client.request(url.toString());
+    if (data.items == undefined) {
+      return {
+        name: "error 403 forbidden",
+        stars: -1
+      };
+    }
     this.rateLimitRemaining -= 1;
     let rated: RatedProject = {
       name: project.name,

@@ -44,6 +44,12 @@ class GithubApi {
         this.fetchRatedProject = async (project) => {
             let url = new Url_1.default(this.repoApi, "repo:" + project.name);
             let data = await this.client.request(url.toString());
+            if (data.items == undefined) {
+                return {
+                    name: "error 403 forbidden",
+                    stars: -1
+                };
+            }
             this.rateLimitRemaining -= 1;
             let rated = {
                 name: project.name,
@@ -67,6 +73,9 @@ class GithubApi {
         let url = new Url_1.default(this.repoApi, this.query).toString();
         let rate = await this.client.getHeader(url, "X-RateLimit-Remaining");
         this.rateLimitRemaining = parseInt(rate) - 1;
+        if (this.rateLimitRemaining == NaN) {
+            throw Error("BED TOKEN\n");
+        }
         await async_file_1.default.writeFile("./rateLimitRemaining.txt", this.rateLimitRemaining);
     }
 }

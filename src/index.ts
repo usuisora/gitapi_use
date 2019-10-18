@@ -3,7 +3,7 @@ import RatedProjectList from "./classes/RatedProjectList";
 import * as fsj from "./lib/fsj";
 import GithubApi from "./classes/githubApi";
 import logStatistics from "./statistics";
-
+// change token
 const { API, ACCESS_TOKEN, QUERY } = process.env;
 
 const main = async () => {
@@ -19,16 +19,13 @@ const main = async () => {
   ratedProjects.top();
 
   if (isAllProjects && isAllRated) {
-    clearInterval(timer);
+    // clearInterval(timer);
   }
-  const top = ratedProjects.top();
-  fsj.writeJSON("./top.json", top);
-  console.log(top);
+  logStatistics();
 };
 
 let timer = setInterval(() => {
-  logStatistics();
   main();
 }, 1000 * 60 * 3);
-
+main();
 logStatistics();

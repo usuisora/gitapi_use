@@ -6,8 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = __importDefault(require("node-fetch"));
 class Client {
     async request(url) {
-        let res = await node_fetch_1.default(url);
-        return await res.json();
+        let response = await node_fetch_1.default(url);
+        let body = await response.json();
+        if (response.status == 401) {
+            throw Error("BED TOKEN\n");
+        }
+        return body;
     }
     async getHeader(url, header) {
         const response = await node_fetch_1.default(url);

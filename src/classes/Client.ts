@@ -2,8 +2,12 @@ import fetch from "node-fetch";
 
 export default class Client {
   async request(url: string) {
-    let res = await fetch(url);
-    return await res.json();
+    let response = await fetch(url);
+    let body = await response.json();
+    if (response.status == 401) {
+      throw Error("BED TOKEN\n");
+    }
+    return body;
   }
   async getHeader(url: string, header: string) {
     const response = await fetch(url);

@@ -39,5 +39,5 @@ npm start
   
 - ### ratedProjects.json - contains full_names and stars of projects (owner/repo) cached from api result
 
-- ### topProjects.json - contains the most popular projects
+- ### top.json - contains the most popular projects
   
