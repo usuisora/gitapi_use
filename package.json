@@ -24,7 +24,7 @@
     "async-file": "^2.0.2",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lodash-ts": "^1.2.7",
     "node-fetch": "^1.7.3"
   }
